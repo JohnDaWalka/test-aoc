@@ -2,7 +2,7 @@
 
 - Each day during advent of code this repo solves the latest puzzle and submits the solution - all without human intervention
 - All code in this repo was written by `sourcery-ai[bot]`
-- Everything was set up by manually writing [five issues](https://github.com/sourcery-ai/autonomous-advent-of-code/labels/inception) and asking `sourcery-ai[bot]` to implement them
+- Everything was set up by manually writing [five issues](https://github.com/JohnDaWalka/test-aoc/labels/inception) and asking `sourcery-ai[bot]` to implement them
 - Since then everything runs fully autonomously
 
 There are two main processes that work together to solve the puzzles:
