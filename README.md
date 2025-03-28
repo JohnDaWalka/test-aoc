@@ -3,7 +3,6 @@
 - Each day during advent of code this repo solves the latest puzzle and submits the solution - all without human intervention
 - All code in this repo was written by `sourcery-ai[bot]`
 - Everything was set up by manually writing [five issues](https://github.com/JohnDaWalka/test-aoc/labels/inception) and asking `sourcery-ai[bot]` to implement them
-  <!-- TODO (high importance): Verify that the above link works as expected -->
 - Since then everything runs fully autonomously
 
 There are two main processes that work together to solve the puzzles:
@@ -77,7 +76,42 @@ It will be most useful for handling routine maintenance and clearing your backlo
 
 If you like the sound of this, [join our waitlist](https://getsourcery.netlify.app/) and tell us anything else you want it to do.
 
-#### Footnotes
+## Triggering the `merge-repos` Workflow
 
-[^1]: We run this twelve hours after the puzzles are published to avoid interfering with any leaderboards
-[^2]: `sourcery-ai[bot]` cannot log into the advent of code website and read the puzzles and input, so we store them in the repository. The advent of code rules ask you not to publish the puzzle text - so we're ROT13 encoding it
+To trigger the `merge-repos` workflow, you need to dispatch a repository event with the event type `merge-repos`. You can do this using the GitHub API or the `gh` CLI tool.
+
+### Example using `gh` CLI
+
+```sh
+gh api repos/:owner/:repo/dispatches --field event_type=merge-repos --field client_payload='{"source_repo": "source-repo-name", "target_repo": "target-repo-name"}'
+```
+
+Replace `:owner` with the repository owner, `:repo` with the repository name, `source-repo-name` with the name of the source repository, and `target-repo-name` with the name of the target repository.
+
+### Example using GitHub API
+
+```sh
+curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token YOUR_GITHUB_TOKEN" https://api.github.com/repos/:owner/:repo/dispatches -d '{"event_type":"merge-repos","client_payload":{"source_repo":"source-repo-name","target_repo":"target-repo-name"}}'
+```
+
+Replace `YOUR_GITHUB_TOKEN` with your GitHub token, `:owner` with the repository owner, `:repo` with the repository name, `source-repo-name` with the name of the source repository, and `target-repo-name` with the name of the target repository.
+
+## Rotating `GH_TOKEN` Regularly
+
+To rotate the `GH_TOKEN` regularly, follow these steps:
+
+1. Generate a new GitHub token with the required permissions.
+2. Update the GitHub Secrets in your repository settings with the new token.
+3. Update any local environment variables or configuration files that use the `GH_TOKEN`.
+4. Monitor the usage of the new token to ensure it is working correctly.
+5. Revoke the old token to minimize the risk of unauthorized access.
+
+## Monitoring the Usage of `GH_TOKEN`
+
+To monitor the usage of the `GH_TOKEN`, follow these best practices:
+
+1. Enable GitHub's security features, such as security alerts and vulnerability scanning, to detect any suspicious activity.
+2. Regularly review the audit logs in your GitHub repository to track the usage of the `GH_TOKEN`.
+3. Set up notifications for any unusual activity or changes in the repository.
+4. Use third-party tools or services to monitor the usage of the `GH_TOKEN` and detect any potential security issues.
+5. Periodically review and update the permissions assigned to the `GH_TOKEN` to ensure they are still necessary and appropriate.
