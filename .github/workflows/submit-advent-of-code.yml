@@ -15,7 +15,7 @@ permissions:
 
 env:
   AOC_SESSION: ${{ secrets.AOC_SESSION }}
-  GH_TOKEN: ${{ secrets.USER_TOKEN }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
   submit:

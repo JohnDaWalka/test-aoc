@@ -8,13 +8,16 @@ permissions:
   contents: write
 
 env:
-  GH_TOKEN: ${{ secrets.USER_TOKEN }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
   merge-sourcery-pr:
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.login == 'sourcery-ai[bot]'
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
       - name: Merge Pull Request
         run: |
           gh pr merge "${{ github.event.pull_request.number }}" \
