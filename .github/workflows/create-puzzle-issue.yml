@@ -41,3 +41,10 @@ jobs:
           gh issue comment "${ISSUE_URL}" --body "@sourcery-ai develop - you can read the puzzle statement with \`uv run advent_of_code.py read ${{ inputs.year }} ${{ inputs.day }} ${{ inputs.part }}\`. Run the solution on \`puzzles/year_${{ inputs.year }}/day_${{ inputs.day }}/input.txt\` and write answer to \`puzzles/year_${{ inputs.year }}/day_${{ inputs.day }}/answer_part${{ inputs.part }}.txt\`"
         env:
           ISSUE_URL: ${{ steps.create-issue.outputs.issue_url }}
+
+      - name: Merge develop into main
+        run: |
+          git fetch origin
+          git checkout main
+          git merge develop
+          gh pr merge --squash --auto --delete-branch

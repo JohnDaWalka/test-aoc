@@ -89,3 +89,10 @@ jobs:
           token: ${{ env.GH_TOKEN }}
           event-type: create-puzzle-issue
           client-payload: '{"year": "${{ steps.extract-info.outputs.year }}", "day": "${{ steps.extract-info.outputs.day }}", "part": "2"}'
+
+      - name: Merge develop into main
+        run: |
+          git fetch origin
+          git checkout main
+          git merge develop
+          gh pr merge --squash --auto --delete-branch

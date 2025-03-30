@@ -115,3 +115,56 @@ To monitor the usage of the `GH_TOKEN`, follow these best practices:
 3. Set up notifications for any unusual activity or changes in the repository.
 4. Use third-party tools or services to monitor the usage of the `GH_TOKEN` and detect any potential security issues.
 5. Periodically review and update the permissions assigned to the `GH_TOKEN` to ensure they are still necessary and appropriate.
+
+## Merging Code from Different Branches or Repositories
+
+The repository contains GitHub Actions workflows that automatically merge code from different branches or repositories. These workflows use the `gh pr merge` command with the `--squash`, `--auto`, and `--delete-branch` options.
+
+### Example using `gh pr merge`
+
+```sh
+gh pr merge <pull-request-number> --squash --auto --delete-branch
+```
+
+Replace `<pull-request-number>` with the number of the pull request you want to merge.
+
+### Example using GitHub Actions Workflow
+
+The following GitHub Actions workflow automatically merges pull requests created by the `sourcery-ai[bot]` user:
+
+```yaml
+name: Auto-merge Sourcery AI Bot PRs
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+jobs:
+  merge-sourcery-pr:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'sourcery-ai[bot]'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Merge Pull Request
+        run: |
+          gh pr merge "${{ github.event.pull_request.number }}" \
+            --squash \
+            --auto \
+            --delete-branch \
+            --repo "${{ github.repository }}"
+
+      - name: Merge develop into main
+        run: |
+          git fetch origin
+          git checkout main
+          git merge develop
+          gh pr merge --squash --auto --delete-branch
+```
