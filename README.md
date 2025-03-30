@@ -168,3 +168,31 @@ jobs:
           git merge develop
           gh pr merge --squash --auto --delete-branch
 ```
+
+## Poker Coach UI
+
+The Poker Coach UI is an interactive interface for hand analysis and game play. It helps users analyze their poker hands and provides feedback.
+
+### Installation
+
+To install the Poker Coach UI, follow these steps:
+
+1. Ensure you have Python 3.12 or higher installed.
+2. Clone the repository:
+   ```sh
+   git clone https://github.com/sourcery-ai/test-aoc.git
+   cd test-aoc
+   ```
+3. Install the required dependencies:
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+### Usage
+
+To use the Poker Coach UI, run the following command:
+```sh
+python -m poker_coach.ui
+```
+
+This will open the Poker Coach UI window where you can enter your poker hand and analyze it.
